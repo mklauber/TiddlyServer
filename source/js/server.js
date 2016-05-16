@@ -15,7 +15,7 @@ var Server = function() {
     var parentDir   = path.dirname(process.argv[1]);
     
     this.socketDir  = path.join(parentDir,'../', 'sockets/');
-    this.configFile = path.join(parentDir,'../', 'config.json');
+    this.configFile = path.resolve('config.json');
     this.config     = require(this.configFile);
     this.servers    = {};
     this.proxy      = httpProxy.createProxy();
@@ -61,6 +61,8 @@ Server.prototype.add = function(prefix, wikiPath) {
 
 Server.prototype.remove = function(prefix) {
     this.servers[prefix].unixServer.server.close();
+    
+    delete this.config[prefix];
     delete this.servers[prefix];
     delete this.proxyRules['rules']["/" + prefix];
 }
@@ -68,12 +70,15 @@ Server.prototype.remove = function(prefix) {
 Server.prototype.save = function(path){
     var savePath = path || this.configFile,
         output   = JSON.stringify(this.config, null, 4);
+    console.log(output);
     fs.writeFileSync(this.configFile, output);
 }
     
 
-Server.prototype.listen = function() {
-    var self = this;
+Server.prototype.listen = function(port, host) {
+    var self = this,
+        port = port || 8080,
+        host = host || '127.0.0.1';
     this.server = http.createServer(function(req, res) {
 
         // a match method is exposed on the proxy rules instance
@@ -93,7 +98,7 @@ Server.prototype.listen = function() {
 	    res.write("</body></html>");
         res.end();
     });
-    this.server.listen(8081, '127.0.0.1');
+    this.server.listen(port, host);
 }
 
 exports.Server = Server;

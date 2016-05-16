@@ -1,9 +1,26 @@
 <html>
     <head>
+        <style>
+            #header, #list, .listItem { clear:both; }
+            #selectFolder, #selectPrefix, #addButton {float:left;}
+            .listItem { min-height: 100px; }
+            .listItem > .title { font-weight: bold; }
+        </style>
+        <script>
+            var serverLib = require('../js/server.js');
+            var server = new serverLib.Server();
+            server.listen('8080', '127.0.0.1');
+        </script>
     </head>
     <body>
-	    It Works
-	    
-        <script src="../js/main.js"></script>
+	    <div id="content">
+	        <div id="header">
+	            <input id="selectFolder" type="file" nwdirectory ></input>
+	            <input id="selectPrefix" type="text"></input>
+	            <div id="addButton">Add</div>
+	        </div>
+	        <div id="list"></div>
+	    </div>
+        <script src="../js/ui.js"></script>        
     </body>
 </html>
