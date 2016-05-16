@@ -1,0 +1,13 @@
+{
+  "name": "TiddlyServer",
+  "main": "html/main.html",
+  
+  "description": "A application which runs multiple TiddlyWiki servers.",
+  "author": "Matthew Lauber",
+  
+  "dependencies": {
+    "tiddlywiki": "../../TiddlyWiki5",
+    "http-proxy": "*",
+    "http-proxy-rules": "*"
+  }
+}
