@@ -6,7 +6,7 @@
   "author": "Matthew Lauber",
   
   "dependencies": {
-    "tiddlywiki": "../../TiddlyWiki5",
+    "tiddlywiki": git://github.com/mklauber/TiddlyWiki5.git#multiserver,
     "http-proxy": "*",
     "http-proxy-rules": "*",
     "react": "*",
