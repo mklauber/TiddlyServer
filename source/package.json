@@ -1,12 +1,13 @@
 {
   "name": "TiddlyServer",
+  "version": "0.5.0",
   "main": "html/main.html",
   
   "description": "A application which runs multiple TiddlyWiki servers.",
   "author": "Matthew Lauber",
   
   "dependencies": {
-    "tiddlywiki": git://github.com/mklauber/TiddlyWiki5.git#multiserver,
+    "tiddlywiki": "git://github.com/mklauber/TiddlyWiki5.git#multiserver",
     "http-proxy": "*",
     "http-proxy-rules": "*",
     "react": "*",

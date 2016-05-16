@@ -16,7 +16,7 @@ var Server = function() {
     
     this.socketDir  = path.join(parentDir,'../', 'sockets/');
     this.configFile = path.resolve('config.json');
-    this.config     = require(this.configFile);
+    this.config     = fs.existsSync(this.configFile) ? require(this.configFile) : {};
     this.servers    = {};
     this.proxy      = httpProxy.createProxy();
     this.proxyRules = {'rules':{}};
