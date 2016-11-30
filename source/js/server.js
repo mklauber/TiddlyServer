@@ -4,12 +4,12 @@
 /*global $tw: false */
 "use strict";
 
-var fs = require("fs"),
-    http = require('http'),
-	httpProxy = require('http-proxy'),
+var fs             = require("fs"),
+    http           = require('http'),
+    httpProxy      = require('http-proxy'),
     HttpProxyRules = require('http-proxy-rules'),
-	path = require("path"),
-	url = require("url");
+    path           = require("path"),
+    url            = require("url");
 
 var Server = function() {
     var parentDir   = path.dirname(process.argv[1]);
@@ -34,7 +34,7 @@ var Server = function() {
         this.add(key, this.config[key]['path']);
     }
     
-}
+};
 
 Server.prototype.add = function(prefix, wikiPath) {
     console.log("Starting server at " + prefix + " for " + wikiPath);
@@ -49,30 +49,28 @@ Server.prototype.add = function(prefix, wikiPath) {
     delete $tw.browser;
     var server = require("tiddlywiki/boot/boot.js").TiddlyWiki($tw);
     server.boot.argv = [wikiPath, '--unixserver', socketPath]
-    console.log("Test1" + server.boot.argv);
     server.boot.boot();
-    console.log("Test 2" + server.boot.argv);
 
     // Save the server to the object, so we can shut it down later if needed.
     this.servers[prefix] = server;
     // Setup the proxy rules to route to the correct location.
-    this.proxyRules['rules']["/" + prefix] = {socketPath: socketPath}; 
-}
+    this.proxyRules.rules["/" + prefix] = {socketPath: socketPath}; 
+};
 
 Server.prototype.remove = function(prefix) {
     this.servers[prefix].unixServer.server.close();
     
     delete this.config[prefix];
     delete this.servers[prefix];
-    delete this.proxyRules['rules']["/" + prefix];
-}
+    delete this.proxyRules.rules["/" + prefix];
+};
 
 Server.prototype.save = function(path){
     var savePath = path || this.configFile,
         output   = JSON.stringify(this.config, null, 4);
     console.log(output);
     fs.writeFileSync(this.configFile, output);
-}
+};
     
 
 Server.prototype.listen = function(port, host) {
@@ -99,7 +97,7 @@ Server.prototype.listen = function(port, host) {
         res.end();
     });
     this.server.listen(port, host);
-}
+};
 
 exports.Server = Server;
 
