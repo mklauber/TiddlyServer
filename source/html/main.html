@@ -2,7 +2,15 @@
     <head>
         <style>
             #header, #list, .listItem { clear:both; }
-            #selectFolder, #selectPrefix, #addButton {float:left;}
+            #selectFolder, #selectFile, #selectRemote { float:right; }
+            .button {
+              padding-left: 10px;
+              padding-right: 10px;
+              border: solid 1px black;
+              border-radius: 5px;
+              margin-left: 10px;
+            }
+
             .listItem { min-height: 100px; }
             .listItem > .title { font-weight: bold; }
             .listItem > .deleteButton { width: 50px;}

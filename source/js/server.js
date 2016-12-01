@@ -56,7 +56,7 @@ Server.prototype.start = function(prefix) {
   this.servers[prefix] = server;
   // Setup the proxy rules to route to the correct location.
   this.proxyRules.rules["/" + prefix] = {socketPath: socketPath};
-}
+};
 
 
 Server.prototype.add = function(prefix, wikiPath) {
