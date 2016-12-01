@@ -12,7 +12,7 @@ var fs             = require("fs-extra"),
     url            = require("url");
 
 var Server = function() {
-  var parentDir   = '/tmp/TiddlyServer';
+  var parentDir   = nw.App.dataPath;
 
   this.socketDir  = path.join(parentDir, 'sockets/');
   this.wikiDir    = path.join(parentDir, 'wikis/');

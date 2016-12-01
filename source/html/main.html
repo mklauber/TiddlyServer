@@ -9,10 +9,34 @@
               border: solid 1px black;
               border-radius: 5px;
               margin-left: 10px;
+              cursor: pointer;
+              background-color: #EEE;
             }
 
-            .listItem { min-height: 100px; }
-            .listItem > .title { font-weight: bold; }
+            #header {
+              padding-top: 10px;
+              background-color: #CCC;
+              height: 30px;
+              position: fixed;
+              width: 100%;
+            }
+
+            #offset {height:30px;}
+
+            .listItem {
+              padding-top: 10px;
+              padding-bottom: 10px;
+              border-bottom: solid 1px #AAA;
+              padding-left:10px;
+            }
+
+            body {
+              background-color: #DDD;
+              margin: 0px;
+            }
+
+
+            .listItem > .title { font-weight: bold; font-size: larger;}
             .listItem > .deleteButton { width: 50px;}
         </style>
         <script>

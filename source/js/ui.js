@@ -38,7 +38,7 @@ var List = React.createClass({
   displayName: 'List',
   render: function() {
     var listItems = this.props.wikis.map(function(wiki) { return React.createElement(ListItem, wiki) });
-    return React.createElement("div", {}, listItems);
+    return React.createElement("div", {id: "list"}, listItems);
   }
 });
 
@@ -82,11 +82,10 @@ var Header = React.createClass({
   },
 
   render: function () {
-    return React.createElement("div", {className:"header"},
-      React.createElement("span", {style:{float:"left"}}, "Prefix"),
+    return React.createElement("div", {id:"header"},
+      React.createElement("span", {}, "Prefix"),
       React.createElement("input", {id:"selectPrefix",
-                                    type:'text',
-                                    style:{float:"left"}}),
+                                    type:'text'}),
       React.createElement("input", {id:"folderInput",
                                     type:'file',
                                     style:{display: "none"}}),
@@ -108,6 +107,7 @@ var Page = React.createClass({
     render: function () {
         return React.createElement("div", {id:"content"},
             React.createElement(Header, {}),
+            React.createElement("div", {id:"offset"}),
             React.createElement(List, this.props)
         );
     }
