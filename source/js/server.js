@@ -75,14 +75,13 @@ Server.prototype.add = function(prefix, wikiPath) {
     var server = require("tiddlywiki/boot/boot.js").TiddlyWiki($tw);
     server.boot.argv = ['--load', wikiPath,
                         '--rendertiddlers',
-                          '[all[tiddlers]]',
+                          '[all[tiddlers]] -[prefix[$:/state/]] -[prefix[$:/temp/]]',
                           '$:/core/templates/tid-tiddler',
                           path.join(this.wikiDir, prefix, 'tiddlers'),
                           'text/vnd.tiddlywiki',
-                          '.tid']
-    server.boot.boot();
-
-
+                          '.tid',
+                          'noclean']
+    server.boot.boot()
   } else if(stats.isDirectory()) {
     fs.copySync(wikiPath, path.join(this.wikiDir, prefix));
   } else {
@@ -93,7 +92,6 @@ Server.prototype.add = function(prefix, wikiPath) {
   var tiddlerDir = path.join(this.wikiDir, prefix, 'tiddlers')
   fs.mkdirsSync(tiddlerDir)
   fs.writeFileSync(path.join(tiddlerDir, '$__config_tiddlyweb_host.tid'),
-           'created: 20161201155609363\nmodified: 20161201155615432\n' +
            'title: $:/config/tiddlyweb/host\ntype: text/vnd.tiddlywiki\n\n' +
            '$protocol$//$host$/' + prefix + '/')
 
@@ -112,6 +110,7 @@ Server.prototype.export = function(prefix, dest) {
 Server.prototype.remove = function(prefix) {
   this.servers[prefix].unixServer.server.close();
 
+  fs.removeSync(path.join(this.wikiDir, prefix));
   delete this.config[prefix];
   delete this.servers[prefix];
   delete this.proxyRules.rules["/" + prefix];

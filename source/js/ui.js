@@ -33,6 +33,7 @@ var ListItem = React.createClass({
   }
 });
 
+
 var List = React.createClass({
   displayName: 'List',
   render: function() {
@@ -102,11 +103,6 @@ var Header = React.createClass({
   }
 });
 
-/*
-	            <div><input id="selectFolder" type="file" nwdirectory ></input></div>
-	            <div ><input id="selectPrefix" type="text"></input></div>
-	            <div id="addButton">Add</div>
-*/
 
 var Page = React.createClass({
     render: function () {
