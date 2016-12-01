@@ -8,10 +8,10 @@ var ReactDOM = require("react-dom");
 
 var ListItem = React.createClass({
     openWiki: function() {
-        var open = require('open'); 
+        var open = require('open');
         open('http://localhost:8080/' + this.props.prefix);
     },
-    
+
     deleteWiki: function(event) {
         event.stopPropagation();
         server.remove(this.props.prefix);
@@ -22,9 +22,9 @@ var ListItem = React.createClass({
     render: function() {
         var self = this,
             title = this.props.server.wiki.renderTiddler('text/plain', '$:/SiteTitle');
-        return React.createElement("div", {className: "listItem", 'onClick': self.openWiki, 'key':self.props.title}, 
-                 React.createElement("div", {className: "title"}, title),
-                 React.createElement("div", {className: "prefix"}, 
+        return React.createElement("div", {className: "listItem", 'key':self.props.title},
+                 React.createElement("div", {className: "title", 'onClick': self.openWiki}, title),
+                 React.createElement("div", {className: "prefix", 'onClick': self.openWiki},
                    React.createElement("span", {}, "Available at /" + self.props.prefix)
                  ),
                  React.createElement("div", {className: "deleteButton", "onClick":self.deleteWiki }, "Delete")
@@ -49,13 +49,13 @@ var Header = React.createClass({
         server.save();
         refresh();
     },
-    
+
     componentDidMount: function() {
         document.getElementById('selectFolder').setAttribute('nwdirectory', "");
     },
-    
+
     render: function () {
-        return React.createElement("div", {className:"header"}, 
+        return React.createElement("div", {className:"header"},
           React.createElement("input", {id:"selectFolder", type:'file', "nwdirectory":"true"}),
           React.createElement("input", {id:"selectPrefix", type:'text'}),
           React.createElement("div", {id:"addButton", onClick:this.add}, "Add")
@@ -71,11 +71,11 @@ var Header = React.createClass({
 
 var Page = React.createClass({
     render: function () {
-        return React.createElement("div", {id:"content"}, 
+        return React.createElement("div", {id:"content"},
             React.createElement(Header, {}),
             React.createElement(List, this.props)
         );
-    }   
+    }
 });
 
 
@@ -88,4 +88,3 @@ var refresh = function() {
 }
 
 refresh();
-
