@@ -46,11 +46,15 @@ var List = React.createClass({
 
 
 var Header = React.createClass({
-  add: function(path) {
+  add: function(chooser, prefix) {
+    chooser.addEventListener("change", function(evt) {
+      server.add(prefix, this.value);
+      server.save();
+      refresh();
+    }, false);
 
-    server.add(prefix, path);
-    server.save();
-    refresh();
+    chooser.value = null;
+    chooser.click();
   },
 
   addFile: function() {
@@ -61,15 +65,9 @@ var Header = React.createClass({
     // Make sure we have a valid prefix first
     if (prefix === "") {
       alert("You must enter a prefix for this wiki.")
-      return;
+    } else {
+      this.add(chooser, prefix)
     }
-
-    chooser.addEventListener("change", function(evt) {
-      self.add(this.value);
-    }, false);
-
-    chooser.value = null;
-    chooser.click();
   },
 
   addFolder: function() {
@@ -80,16 +78,9 @@ var Header = React.createClass({
     // Make sure we have a valid prefix first
     if (prefix === "") {
       alert("You must enter a prefix for this wiki.")
-      return;
+    } else {
+      this.add(chooser, prefix)
     }
-
-    
-    chooser.addEventListener("change", function(evt) {
-      self.add(this.value);
-    }, false);
-
-    chooser.value = null;
-    chooser.click();
   },
 
 

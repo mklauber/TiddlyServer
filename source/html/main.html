@@ -21,7 +21,7 @@
 
             #header {
               padding-top: 10px;
-              background-color: #CCC;
+              background-color: #BBB;
               height: 30px;
               position: fixed;
               width: 100%;
@@ -32,16 +32,21 @@
             .listItem {
               padding-top: 10px;
               padding-bottom: 10px;
-              border-bottom: solid 1px #AAA;
+              border-bottom: solid 1px #999;
               padding-left:10px;
+              transition-property: background-color;
+              transition-duration: 1s;
+              transition-timing-function: ease;
             }
+
+            .listItem:hover { background-color: #DDD;}
 
             .delete:hover {
               background-color: red;
             }
 
             body {
-              background-color: #DDD;
+              background-color: #CCC;
               margin: 0px;
             }
 
