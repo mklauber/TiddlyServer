@@ -21,16 +21,40 @@ var ListItem = React.createClass({
     }
   },
 
+  export: function(event) {
+    event.stopPropagation();
+    var self = this,
+        prefix  = this.props.prefix,
+        chooser = document.querySelector('#export'+this.props.prefix);
+
+    chooser.addEventListener("change", function(evt) {
+      server.export(prefix, this.value);
+      server.save();
+      refresh();
+    }, false);
+
+    chooser.value = null;
+    chooser.click();
+
+  },
+
+  componentDidMount: function() {
+    document.getElementById("export" + this.props.prefix).setAttribute('nwsaveas', "");
+  },
+
   render: function() {
     var self = this,
         title = this.props.server.wiki.renderTiddler('text/plain', '$:/SiteTitle');
     return React.createElement("div", {className: "listItem", 'key':self.props.title},
+             React.createElement("input", {id:"export" + self.props.prefix,
+                                           type:'file',
+                                           style:{display: "none"}}),
              React.createElement("div", {className: "title", 'onClick': self.openWiki}, title),
              React.createElement("div", {className: "prefix", 'onClick': self.openWiki},
                React.createElement("span", {}, "Available at /" + self.props.prefix)
              ),
              React.createElement("span", {className: "delete button", "onClick":self.deleteWiki }, "Delete"),
-             React.createElement("span", {className: "export button"}, "Export")
+             React.createElement("span", {className: "export button", "onClick":self.export}, "Export")
            );
   }
 });
@@ -58,8 +82,7 @@ var Header = React.createClass({
   },
 
   addFile: function() {
-    var self    = this,
-        prefix  = document.getElementById('selectPrefix').value,
+    var prefix  = document.getElementById('selectPrefix').value,
         chooser = document.querySelector('#fileInput');
 
     // Make sure we have a valid prefix first
@@ -71,8 +94,7 @@ var Header = React.createClass({
   },
 
   addFolder: function() {
-    var self    = this,
-        prefix  = document.getElementById('selectPrefix').value,
+    var prefix  = document.getElementById('selectPrefix').value,
         chooser = document.querySelector('#folderInput');
 
     // Make sure we have a valid prefix first
@@ -82,7 +104,6 @@ var Header = React.createClass({
       this.add(chooser, prefix)
     }
   },
-
 
   componentDidMount: function() {
     document.getElementById('folderInput').setAttribute('nwdirectory', "");

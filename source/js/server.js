@@ -10,6 +10,7 @@ var fs             = require("fs-extra"),
     HttpProxyRules = require('http-proxy-rules'),
     path           = require("path"),
     spawnSync      = require("child_process").spawnSync,
+    tiddlywikiPath = require.resolve("tiddlywiki/tiddlywiki.js"),
     url            = require("url");
 
 var Server = function() {
@@ -64,7 +65,6 @@ Server.prototype.add = function(prefix, wikiPath) {
   var stats = fs.lstatSync(wikiPath);
   if(stats.isFile()) {
     // Create a wiki Folder
-    var tiddlywikiPath = require.resolve("tiddlywiki/tiddlywiki.js");
     spawnSync('nodejs', [tiddlywikiPath, path.join(this.wikiDir, prefix),
                      '--init', 'server'], {shell:true})
 
@@ -97,10 +97,15 @@ Server.prototype.add = function(prefix, wikiPath) {
 };
 
 Server.prototype.export = function(prefix, dest) {
-  // "--rendertiddler",
-  // "$:/plugins/tiddlywiki/tiddlyweb/save/offline",
-  // "index.html",
-  // "text/plain"
+  console.log(prefix);
+  console.log(tiddlywikiPath);
+  console.log(path.join(this.wikiDir, prefix));
+  spawnSync('nodejs', [tiddlywikiPath,
+                       path.join(this.wikiDir, prefix),
+                       "--rendertiddler",
+                       "'$:/core/save/all'",
+                       dest,
+                       "text/plain"], {shell:true});
 };
 
 
