@@ -9,6 +9,7 @@ var fs             = require("fs-extra"),
     httpProxy      = require('http-proxy'),
     HttpProxyRules = require('http-proxy-rules'),
     path           = require("path"),
+    spawnSync      = require("child_process").spawnSync,
     url            = require("url");
 
 var Server = function() {
@@ -41,9 +42,9 @@ var Server = function() {
 };
 
 Server.prototype.start = function(prefix) {
-  console.log("Starting server at " + prefix + " for " + wikiPath);
   var socketPath = path.join(this.socketDir, prefix);
   var wikiPath   = path.join(this.wikiDir, prefix);
+  console.log("Starting server at " + prefix + " for " + wikiPath);
 
   // Create the server on a unix socket path
   var $tw = require("tiddlywiki/boot/bootprefix.js").bootprefix();
@@ -63,25 +64,21 @@ Server.prototype.add = function(prefix, wikiPath) {
   var stats = fs.lstatSync(wikiPath);
   if(stats.isFile()) {
     // Create a wiki Folder
-    var $tw = require("tiddlywiki/boot/bootprefix.js").bootprefix();
-    delete $tw.browser;
-    var server = require("tiddlywiki/boot/boot.js").TiddlyWiki($tw);
-    server.boot.argv = [path.join(this.wikiDir, prefix), '--init', 'server']
-    server.boot.boot();
+    var tiddlywikiPath = require.resolve("tiddlywiki/tiddlywiki.js");
+    spawnSync('nodejs', [tiddlywikiPath, path.join(this.wikiDir, prefix),
+                     '--init', 'server'], {shell:true})
+
 
     // Import tiddlers from Wiki File.
-    var $tw = require("tiddlywiki/boot/bootprefix.js").bootprefix();
-    delete $tw.browser;
-    var server = require("tiddlywiki/boot/boot.js").TiddlyWiki($tw);
-    server.boot.argv = ['--load', wikiPath,
+    spawnSync('nodejs', [tiddlywikiPath, '--load', wikiPath,
                         '--rendertiddlers',
-                          '[all[tiddlers]] -[prefix[$:/state/]] -[prefix[$:/temp/]]',
+                          '"[all[tiddlers]] -[prefix[$:/state/]] -[prefix[$:/temp/]]"',
                           '$:/core/templates/tid-tiddler',
                           path.join(this.wikiDir, prefix, 'tiddlers'),
                           'text/vnd.tiddlywiki',
                           '.tid',
-                          'noclean']
-    server.boot.boot()
+                          'noclean'], {shell:true})
+
   } else if(stats.isDirectory()) {
     fs.copySync(wikiPath, path.join(this.wikiDir, prefix));
   } else {
