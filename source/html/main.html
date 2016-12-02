@@ -3,6 +3,9 @@
         <style>
             #header, #list, .listItem { clear:both; }
             #selectFolder, #selectFile, #selectRemote { float:right; }
+            #selectFolder:hover, #selectFile:hover, #selectRemote:hover {
+              background-color: #99ff99;
+            }
             .button {
               padding-left: 10px;
               padding-right: 10px;
@@ -11,6 +14,9 @@
               margin-left: 10px;
               cursor: pointer;
               background-color: #EEE;
+              transition-property: background-color;
+              transition-duration: 1s;
+              transition-timing-function: ease;
             }
 
             #header {
@@ -28,6 +34,10 @@
               padding-bottom: 10px;
               border-bottom: solid 1px #AAA;
               padding-left:10px;
+            }
+
+            .delete:hover {
+              background-color: red;
             }
 
             body {

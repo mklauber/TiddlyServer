@@ -14,9 +14,11 @@ var ListItem = React.createClass({
 
   deleteWiki: function(event) {
     event.stopPropagation();
-    server.remove(this.props.prefix);
-    server.save();
-    refresh();
+    if(confirm("Are you sure you want to delete this wiki?")){
+      server.remove(this.props.prefix);
+      server.save();
+      refresh();
+    }
   },
 
   render: function() {
@@ -45,18 +47,23 @@ var List = React.createClass({
 
 var Header = React.createClass({
   add: function(path) {
-    var prefix = document.getElementById('selectPrefix').value;
-    if (prefix === "") {
-      return;
-    }
+
     server.add(prefix, path);
     server.save();
     refresh();
   },
 
   addFile: function() {
-    var self = this;
-    var chooser = document.querySelector('#fileInput');
+    var self    = this,
+        prefix  = document.getElementById('selectPrefix').value,
+        chooser = document.querySelector('#fileInput');
+
+    // Make sure we have a valid prefix first
+    if (prefix === "") {
+      alert("You must enter a prefix for this wiki.")
+      return;
+    }
+
     chooser.addEventListener("change", function(evt) {
       self.add(this.value);
     }, false);
@@ -66,8 +73,17 @@ var Header = React.createClass({
   },
 
   addFolder: function() {
-    var self = this;
-    var chooser = document.querySelector('#folderInput');
+    var self    = this,
+        prefix  = document.getElementById('selectPrefix').value,
+        chooser = document.querySelector('#folderInput');
+
+    // Make sure we have a valid prefix first
+    if (prefix === "") {
+      alert("You must enter a prefix for this wiki.")
+      return;
+    }
+
+    
     chooser.addEventListener("change", function(evt) {
       self.add(this.value);
     }, false);
