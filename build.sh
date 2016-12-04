@@ -6,6 +6,20 @@ NW_DIR="`pwd`/nw.js/"
 BUILD_DIR="`pwd`/build"
 OUTPUT_DIR="`pwd`/output"
 
+OS_NAME=`uname -s`
+
+os_download() {
+    local TARGET=$1 SOURCE=$2
+    if [ ${OS_NAME} == 'Linux' ]; then
+        wget -O ${TARGET} ${SOURCE}
+    elif [ ${OS_NAME} == 'Darwin' ]; then
+        curl -o ${TARGET} ${SOURCE}
+    else
+        echo "unsure what to use for ${OS_NAME}"
+        exit
+    fi
+}
+
 clean() {
     rm -rf $NW_DIR
     rm -rf $BUILD_DIR
@@ -14,11 +28,11 @@ clean() {
 
 download() {
     mkdir -p $NW_DIR
-    wget -O $NW_DIR/linux32.tar.gz https://dl.nwjs.io/$NWJS_VERSION/nwjs-$NWJS_VERSION-linux-ia32.tar.gz
-    wget -O $NW_DIR/linux64.tar.gz https://dl.nwjs.io/$NWJS_VERSION/nwjs-$NWJS_VERSION-linux-x64.tar.gz
-    wget -O $NW_DIR/win32.zip      https://dl.nwjs.io/$NWJS_VERSION/nwjs-$NWJS_VERSION-win-ia32.zip
-    wget -O $NW_DIR/win64.zip      https://dl.nwjs.io/$NWJS_VERSION/nwjs-$NWJS_VERSION-win-x64.zip
-    wget -O $NW_DIR/osx.zip        https://dl.nwjs.io/$NWJS_VERSION/nwjs-$NWJS_VERSION-osx-x64.zip
+    os_download $NW_DIR/linux32.tar.gz https://dl.nwjs.io/$NWJS_VERSION/nwjs-$NWJS_VERSION-linux-ia32.tar.gz
+    os_download $NW_DIR/linux64.tar.gz https://dl.nwjs.io/$NWJS_VERSION/nwjs-$NWJS_VERSION-linux-x64.tar.gz
+    os_download $NW_DIR/win32.zip      https://dl.nwjs.io/$NWJS_VERSION/nwjs-$NWJS_VERSION-win-ia32.zip
+    os_download $NW_DIR/win64.zip      https://dl.nwjs.io/$NWJS_VERSION/nwjs-$NWJS_VERSION-win-x64.zip
+    os_download $NW_DIR/osx.zip        https://dl.nwjs.io/$NWJS_VERSION/nwjs-$NWJS_VERSION-osx-x64.zip
     pushd source
     npm install
     popd
