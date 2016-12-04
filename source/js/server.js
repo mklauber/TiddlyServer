@@ -70,11 +70,11 @@ Server.prototype.add = function(prefix, wikiPath) {
 
 
     // Import tiddlers from Wiki File.
-    spawnSync('nodejs', [tiddlywikiPath, '--load', wikiPath,
+    spawnSync('nodejs', [tiddlywikiPath, '--load', "'" + wikiPath + "'",
                         '--rendertiddlers',
                           '"[all[tiddlers]] -[prefix[$:/state/]] -[prefix[$:/temp/]]"',
                           '$:/core/templates/tid-tiddler',
-                          path.join(this.wikiDir, prefix, 'tiddlers'),
+                          "'" +path.join(this.wikiDir, prefix, 'tiddlers') + "'",
                           'text/vnd.tiddlywiki',
                           '.tid',
                           'noclean'], {shell:true})
