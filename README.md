@@ -15,4 +15,4 @@ Unzip into a folder and run `TiddlyWiki.app` or or `nw.exe` and for linux `nw`.
 # Usage
 
 ## Multiple Configurations
-To have separate mutliple instances of TiddlyServer (for example, separate Personal and Professional instances), you can pass the `--data-path` argument.  e.g. `/opt/TiddlyServer/nw --data-path=/mnt/data/TiddlyServer/config`.  The property should be a directory to use for holding configuration data.
+To have separate mutliple instances of TiddlyServer (for example, separate Personal and Professional instances), you can pass the `--user-config-dir` argument.  e.g. `/opt/TiddlyServer/nw --data-path=/mnt/data/TiddlyServer/config`.  The property should be a directory to use for holding configuration data.
