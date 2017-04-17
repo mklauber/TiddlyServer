@@ -9,7 +9,7 @@
   "dependencies": {
     "tiddlywiki": "git://github.com/mklauber/TiddlyWiki5.git#multiserver",
     "http-proxy": "*",
-    "http-proxy-rules": "*",
+    "http-proxy-rules": "https://github.com/donasaur/http-proxy-rules.git#e3753f1a2ff5138ae187c5ff6edc6adcdfed32d4",
     "react": "*",
     "react-dom": "*",
     "open": "*",
